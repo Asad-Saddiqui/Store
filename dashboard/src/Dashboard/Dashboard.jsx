@@ -1,9 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Layout, Menu } from "antd";
 import { ArrowDownOutlined, DashboardFilled, MenuUnfoldOutlined, SettingFilled, ShopFilled } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout
 function Dashboard() {
+    const navigate = useNavigate()
+
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            navigate('/login')
+        }
+    }, [])
+
+
+
+
+
+
+
+
 
 
 
@@ -21,8 +39,6 @@ function Dashboard() {
 
 
     }
-
-
 
     return (
         <>
@@ -81,8 +97,13 @@ function Dashboard() {
                         <Button type={'primary'} onClick={handleCollapse}>
                             <MenuUnfoldOutlined />
                         </Button>
-                        <Link to={"/login"}>Login</Link>
-                        <Link to={"/Signup"}>Signup</Link>
+
+                        <Button onClick={() => {
+                            localStorage.clear()
+                            navigate('/login')
+                        }}>
+                            Logout
+                        </Button>
 
 
                     </Header>

@@ -25,7 +25,7 @@ function Signup() {
 
     const handleSubmit = async () => {
 
-        fetch('http://localhost:4000/signup', {
+        fetch('http://localhost:4000/api/user/signup', {
             method: "POST",
             headers: {
                 "Content-Type": "Application/json"
