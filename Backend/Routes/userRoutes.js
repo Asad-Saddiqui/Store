@@ -7,7 +7,7 @@ const isAdmin = require('../middleware/isAdmin')
 
 router.post('/signup', userControllers.signup)
 router.post('/login', userControllers.loginFunc)
-router.get('/user', authMiddleware.authMiddleware, isAdmin.isAdmin, userControllers.getUser)
+router.get('/',  userControllers.getUser)
 
 
 

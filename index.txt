@@ -1,0 +1,47 @@
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
+async function hashPassword(plainPassword) {
+    const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+    console.log('Hashed Password:', hashedPassword);
+    return hashedPassword;
+}
+
+async function checkPassword(plainPassword, storedHashedPassword) {
+    const isMatch = await bcrypt.compare(plainPassword, storedHashedPassword);
+    console.log(isMatch ? 'Password matched!' : 'Password does not match.');
+}
+
+// Example usage:
+const plainPassword = 'mySuperSecretPassword';
+hashPassword(plainPassword);
+
+const storedHashedPassword = '$2b$10$QqYtw1l7qV44hxjc8ShvVej5Fi3hh5yVxw1UtyeTj.kDTd7rKfSgm'; // Example stored hash
+checkPassword(plainPassword, storedHashedPassword);
+
+
+
+const jwt = require('jsonwebtoken');
+
+// Secret key to sign the token
+const SECRET_KEY = 'your_secret_key';
+
+// Example payload
+const payload = {
+  id: 1,
+  username: 'john_doe',
+  role: 'admin'
+};
+
+// --------- Encode (Sign) ----------
+const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+console.log('Encoded JWT:', token);
+
+// --------- Decode (Verify) ----------
+try {
+  const decoded = jwt.verify(token, SECRET_KEY);
+  console.log('Decoded Payload:', decoded);
+} catch (err) {
+  console.error('Invalid token:', err.message);
+}

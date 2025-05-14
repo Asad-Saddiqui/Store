@@ -29,10 +29,10 @@ function Login() {
         const res = await fetch('http://localhost:4000/api/user/login ', {
             method: "POST",
             headers: {
-
                 "Content-Type": "Application/json"
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password }),
+            credentials: "include"
 
         })
         const data = await res.json();
@@ -40,7 +40,7 @@ function Login() {
 
         if (res.ok) {
 
-            localStortokenage.setItem("token", data.token)
+            localStorage.setItem("token", data.token)
             navigate('/')
         } else {
             message.error("invalid Cradentials")
