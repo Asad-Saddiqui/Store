@@ -6,6 +6,8 @@ function Signup() {
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [role, setRole] = useState("Admin")
+
 
 
     const handlefirstname = (val) => {
@@ -30,7 +32,7 @@ function Signup() {
             headers: {
                 "Content-Type": "Application/json"
             },
-            body: JSON.stringify({ fisrtName, lastName, email, password })
+            body: JSON.stringify({ fisrtName, role, lastName, email, password })
 
         })
     }
@@ -63,6 +65,7 @@ function Signup() {
                             <Typography.Text>Password </Typography.Text>
                             <Input.Password onChange={handlePassword} style={{ height: "40px" }} placeholder='Password' />
                         </Col>
+
                         <Col span={24}>
                             <Button onClick={handleSubmit} style={{ height: "40px" }} type="primary" block>
                                 Create Account

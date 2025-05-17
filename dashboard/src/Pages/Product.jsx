@@ -1,8 +1,14 @@
 import { Button, Form, Input, InputNumber, Upload, message, Table, Space, Modal } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import MyContext from '../store/Context';
 
 function Product() {
+
+    const { counter, setCounter } = useContext(MyContext)
+
+
+
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,10 +35,10 @@ function Product() {
         formData.append('description', values.description)
         formData.append('image', image)
 
-        const url = editingProduct 
+        const url = editingProduct
             ? `http://localhost:4000/api/products/${editingProduct._id}`
             : 'http://localhost:4000/api/products';
-        
+
         const method = editingProduct ? 'PUT' : 'POST';
 
         const res = await fetch(url, {
@@ -91,7 +97,7 @@ function Product() {
             title: 'Image',
             dataIndex: 'image',
             key: 'image',
-            render: (image) => <img src={`http://localhost:4000/${image}`} alt="product" style={{width: '50px'}} />
+            render: (image) => <img src={`http://localhost:4000/${image}`} alt="product" style={{ width: '50px' }} />
         },
         {
             title: 'Actions',
@@ -114,14 +120,18 @@ function Product() {
                 setEditingProduct(null);
                 setIsModalOpen(true);
             }} style={{ margin: '20px' }}>
-                Add New Product
+                Add New Product  {counter}
             </Button>
 
-            <Table columns={columns} dataSource={products} rowKey="_id" />
 
-            <Modal 
-                title={editingProduct ? "Edit Product" : "Add New Product"} 
-                open={isModalOpen} 
+            <Button onClick={() => setCounter(counter - 1)}> -
+            </Button>
+
+            <Table columns={columns} dataSource={products ? products : []} rowKey="_id" />
+
+            <Modal
+                title={editingProduct ? "Edit Product" : "Add New Product"}
+                open={isModalOpen}
                 destroyOnClose={true}
                 onCancel={() => {
                     setIsModalOpen(false);
@@ -129,22 +139,22 @@ function Product() {
                 }}
                 footer={null}
             >
-                <Form 
-                    layout="vertical" 
+                <Form
+                    layout="vertical"
                     onFinish={handleFinish}
                     initialValues={editingProduct}
                 >
                     <Form.Item name="product_name" label="Product Name">
-                        <Input style={{width: '100%'}} />
+                        <Input style={{ width: '100%' }} />
                     </Form.Item>
                     <Form.Item name="price" label="Product price">
-                        <InputNumber style={{width: '100%'}} />
+                        <InputNumber style={{ width: '100%' }} />
                     </Form.Item>
                     <Form.Item name="description" label="Product description">
-                        <Input style={{width: '100%'}} />
+                        <Input style={{ width: '100%' }} />
                     </Form.Item>
                     <Form.Item name="image" label="Product Image">
-                        <Upload style={{width: '100%'}} maxCount={1} beforeUpload={() => false}>
+                        <Upload style={{ width: '100%' }} maxCount={1} beforeUpload={() => false}>
                             <Button type="primary">Upload File</Button>
                         </Upload>
                     </Form.Item>

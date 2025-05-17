@@ -25,6 +25,8 @@ exports.loginFunc = async (req, res) => {
 
     res.cookie("token", token, { maxAge: 8 * 60 * 60 * 1000, httpOnly: true })
     res.cookie('user', findUser.email, { maxAge: 8 * 60 * 60 * 1000, httpOnly: false });
+    res.cookie('role', findUser.role, { maxAge: 8 * 60 * 60 * 1000, httpOnly: false });
+
 
     return res.json({
       login: true,
@@ -55,6 +57,7 @@ exports.signup = async (req, res) => {
   console.log({ hashPassword })
 
   data.password = hashPassword
+  data.role = "User"
   const user_ = await User.create(data)
   const saved = await user_.save()
   return res.json({ msg: "Account Created" })

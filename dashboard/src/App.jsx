@@ -9,20 +9,22 @@ import MainLayout from './layout/Layout';
 
 import { Routes, Route } from 'react-router-dom'
 import Product from './Pages/Product';
+import Provider from './store/Provide';
 
 
 function App() {
   return (
     <>
-
-      <Routes>
-        <Route path='/' element={<MainLayout />} >
-          <Route index element={<Dashboard />} />
-          <Route path='product' element={<Product />} />
-        </Route>
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-      </Routes>
+      <Provider>
+        <Routes>
+          <Route path='/' element={<MainLayout />} >
+            <Route index element={<Dashboard />} />
+            <Route path='product' element={<Product />} />
+          </Route>
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+        </Routes>
+      </Provider>
 
     </>
   )

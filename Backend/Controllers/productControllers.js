@@ -4,14 +4,14 @@ exports.addProduct = async (req, res) => { // add product
 
     const file = req.file // get file
     const user = req.user // get user
-    console.log({user}) // log user
-    console.log({file}) // log file
+    console.log({ user }) // log user
+    console.log({ file }) // log file
 
     const newProduct = new Product({ // create new product
         product_name: req.body.product_name, // add product name
         price: req.body.price, // add price
         description: req.body.description, // add description
-        user: user.id, // add user id
+        user_id: user._id, // add user id
         image: file.filename // add image path
     })
 
@@ -20,7 +20,7 @@ exports.addProduct = async (req, res) => { // add product
 
 }
 exports.getProducts = async (req, res) => { // get products
-    const products = await Product.find() // get all products
+    const products = await Product.find().populate("user_id") // get all products
     res.status(200).json(products) // return products
 }
 
